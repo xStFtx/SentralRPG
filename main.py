@@ -4,6 +4,12 @@ from imports.Exploring import Exploring
 from imports.Quests import QuestManager, Quest, QuestLoader
 
 def main():
+    class_attributes = {
+        "1": {"name": "Warrior", "strength": 10, "intelligence": 2, "sneak": 1},
+        "2": {"name": "Mage", "strength": 2, "intelligence": 10, "sneak": 4},
+        "3": {"name": "Rogue", "strength": 4, "intelligence": 4, "sneak": 10}
+    }
+
     while True:
         name = input("Enter your character's name: ")
         print("Choose your character's class:")
@@ -12,15 +18,17 @@ def main():
         print("3. Rogue")
         class_choice = input("Enter your choice: ")
 
-        character_class = ""
-        if class_choice == "1":
-            character_class = "Warrior"
-        elif class_choice == "2":
-            character_class = "Mage"
-        elif class_choice == "3":
-            character_class = "Rogue"
+        if class_choice in class_attributes:
+            attributes = class_attributes[class_choice]
+            character_class = attributes["name"]
+            strength = attributes["strength"]
+            intelligence = attributes["intelligence"]
+            sneak = attributes["sneak"]
+        else:
+            print("Invalid choice. Please try again.")
+            continue
 
-        player = Character(name, character_class, 100, 10, 5)
+        player = Character(name, character_class, 100, strength, intelligence, sneak)
         exploration = Exploring(player)
 
         quest_manager = QuestManager()

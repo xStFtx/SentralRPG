@@ -11,30 +11,66 @@ class Exploring:
         event = random.randint(1, 3)
 
         if event == 1:
-            self.encounter_enemy()
+            if self.player.level < 3:
+                self.encounter_enemy(Goblin())
+            elif self.player.level < 5:
+                self.encounter_enemy(Skeleton())
+            elif self.player.level < 10:
+                self.encounter_enemy(Orc())
+            elif self.player.level < 20:
+                self.encounter_enemy(Dragon())
+            else:
+                self.encounter_enemy(random.choice([SkeletonBoss(), OrcBoss()]))
         elif event == 2:
             self.find_treasure_chest()
         else:
             print("You didn't find anything interesting.")
 
-    def encounter_enemy(self):
-        enemy = random.choice([Goblin(), Skeleton(), Orc(), Dragon(), SkeletonBoss(), OrcBoss()])
-        print("You encountered an enemy:", enemy.name)
-        while self.player.is_alive() and enemy.is_alive():
-            self.player.attack(enemy)
-            if enemy.is_alive():
-                enemy.attack(self.player)
+    def encounter_enemy(self, enemy):
+        print(f"You encountered a {enemy.name}!")
 
-        if self.player.is_alive():
-            print(f"You defeated {enemy.name}!")
-            potion = Potion("Health Potion", "Health", 20)  # Create a Health Potion item
-            self.player.add_item_to_inventory(potion)
-            self.player.gain_experience(enemy.xp)  # Gain XP from defeated enemy
-        else:
-            print("You were defeated by the enemy.")
-            self.player.reset()  # Reset the player if defeated
+        while enemy.is_alive() and self.player.is_alive():
+            print("\nChoose your action:")
+            print("1. Attack (S)")
+            print("2. Attack with Intelligence (I)")
+            print("3. Sneak Attack (A)")
+            print("4. Run Away (R)")
+
+            choice = input("Enter your choice: ")
+
+            if choice.lower() == "s" or choice == "1":
+                self.player.attack(enemy)
+                if enemy.is_alive():
+                    enemy.attack(self.player)
+            elif choice.lower() == "i" or choice == "2":
+                if self.player.intelligence < 5:
+                    print("Your Intelligence is too low to perform this action.")
+                    continue
+                self.player.attack_with_intelligence(enemy)
+                if enemy.is_alive():
+                    enemy.attack(self.player)
+            elif choice.lower() == "a" or choice == "3":
+                if self.player.sneak < 5:
+                    print("Your Sneak is too low to perform this action.")
+                    continue
+                self.player.sneak_attack(enemy)
+                if enemy.is_alive():
+                    enemy.attack(self.player)
+            elif choice.lower() == "r" or choice == "4":
+                print("You ran away from the enemy.")
+                break
+            else:
+                print("Invalid choice. Please try again.")
+
+            if not enemy.is_alive():
+                self.player.gain_experience(enemy.experience_points)
+                self.player.add_item_to_inventory(enemy.loot())
+                break
+
+        if not self.player.is_alive():
+            self.player.reset()
 
     def find_treasure_chest(self):
         print("You found a treasure chest!")
-        potion = random.choice([Potion("Health Potion", "Health", 20), Potion("Mana Potion", "Mana", 20)])
-        self.player.add_item_to_inventory(potion)
+        item = random.choice([Potion("Health Potion", "Health", 10), Potion("Mana Potion", "Mana", 10)])
+        self.player.add_item_to_inventory(item)

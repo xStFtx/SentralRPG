@@ -1,4 +1,4 @@
-from imports.Character import Character
+import random
 
 class SkillBook:
     def __init__(self, name, skill, skill_type):
