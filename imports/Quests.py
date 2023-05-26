@@ -6,30 +6,46 @@ class Quest:
         self.rewards = rewards
         self.completed = False
 
-    def check_completion(self):
-        # Implement logic to check if all objectives are completed
-        pass
-
-    def complete(self):
-        if self.check_completion():
-            # Grant rewards to the player
-            self.completed = True
-            print(f"Quest '{self.name}' completed!")
-        else:
-            print(f"Quest '{self.name}' is not yet completed.")
-
     def display_quest_info(self):
-        print(f"Quest: {self.name}")
-        print(f"Description: {self.description}")
-        print("Objectives:")
-        for objective in self.objectives:
-            print(f"- {objective}")
-        print("Rewards:")
-        for reward in self.rewards:
-            print(f"- {reward}")
+        print("Quest:", self.name)
+        print("Description:", self.description)
+        print("Objectives:", ", ".join(self.objectives))
+        print("Rewards:", ", ".join(self.rewards))
+        if self.completed:
+            print("Status: Completed")
+        else:
+            print("Status: In Progress")
+
+    def complete_quest(self):
+        if not self.completed:
+            print(f"Congratulations! You have completed the quest: {self.name}")
+            print("You receive the following rewards:", ", ".join(self.rewards))
+            self.completed = True
+        else:
+            print("This quest has already been completed.")
 
 
-# Quests
+class QuestManager:
+    def __init__(self):
+        self.quests = []
+
+    def add_quest(self, quest):
+        self.quests.append(quest)
+
+    def remove_quest(self, quest):
+        if quest in self.quests:
+            self.quests.remove(quest)
+
+    def display_all_quests(self):
+        if not self.quests:
+            print("No quests available.")
+        else:
+            print("Quests:")
+            for quest in self.quests:
+                quest.display_quest_info()
+                print()
+
+
 quest1 = Quest(
     name="Save the Village",
     description="The village is under attack by monsters. Defeat all the monsters and save the village.",
@@ -51,5 +67,8 @@ quest3 = Quest(
     rewards=["Legendary weapon", "Unlock new abilities"]
 )
 
-# List of all quests
 quests = [quest1, quest2, quest3]
+
+def QuestLoader(quest_manager):
+    for quest in quests:
+        quest_manager.add_quest(quest)

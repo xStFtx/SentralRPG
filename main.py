@@ -1,7 +1,7 @@
 from imports.Character_creation import Character
 from imports.Enemy import Enemy
 from imports.Exploring import Exploring
-from imports.Quests import quests
+from imports.Quests import QuestManager, Quest, QuestLoader
 
 import random
 
@@ -24,9 +24,12 @@ def main():
     player = Character(name, character_class, 100, 10, 5)
     exploration = Exploring(player)
 
+    quest_manager = QuestManager()
+    QuestLoader(quest_manager) 
+
     print("Welcome to the Text-Based RPG!")
     while True:
-        print("1. Explore Location")
+        print("\n1. Explore Location")
         print("2. Check Inventory")
         print("3. View Quests")
         print("4. Quit")
@@ -38,22 +41,12 @@ def main():
         elif choice == "2":
             player.display_character_info()
         elif choice == "3":
-            display_active_quests()
+            quest_manager.display_all_quests()
         elif choice == "4":
             print("Thank you for playing!")
             break
         else:
             print("Invalid choice. Please try again.")
-
-def display_active_quests():
-    print("Active Quests:")
-    print()  # Add an empty line for spacing
-    
-    for quest in quests:
-        if not quest.completed:
-            quest.display_quest_info()
-            print()  # Add an empty line between quests
-
 
 if __name__ == "__main__":
     main()

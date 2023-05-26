@@ -1,3 +1,4 @@
+from .Quests import QuestManager
 class Character:
     def __init__(self, name, character_class, health, strength, intelligence):
         self.name = name
@@ -6,16 +7,14 @@ class Character:
         self.strength = strength
         self.intelligence = intelligence
         self.inventory = []
-        self.equipped_shield = None
-        self.equipped_armor = None
-        self.equipped_weapon = None
+        self.quest_manager = QuestManager()  # Initialize the QuestManager
 
     def display_character_info(self):
-        print(f"Name: {self.name}")
-        print(f"Class: {self.character_class}")
-        print(f"Health: {self.health}")
-        print(f"Strength: {self.strength}")
-        print(f"Intelligence: {self.intelligence}")
+        print("Name:", self.name)
+        print("Class:", self.character_class)
+        print("Health:", self.health)
+        print("Strength:", self.strength)
+        print("Intelligence:", self.intelligence)
 
         inventory_counts = {}  # Dictionary to store item counts
         for item in self.inventory:
