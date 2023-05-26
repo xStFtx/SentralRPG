@@ -6,43 +6,43 @@ class SkillBook:
         self.skill = skill
         self.skill_type = skill_type
 
-    def use(self):
+    def use(self, character):
         print(f"Using skill book: {self.name}")
         if self.skill_type == "Health":
-            Character.health += self.skill
+            character.health += self.skill
         elif self.skill_type == "Attack":
-            Character.attack += self.skill
+            character.attack += self.skill
         elif self.skill_type == "Defense":
-            Character.defense += self.skill
+            character.defense += self.skill
 
 class Equipment:
     def __init__(self, name, stat):
         self.name = name
         self.stat = stat
 
-    def equip(self):
+    def equip(self, character):
         print(f"Equipping {self.name}: {self.stat}")
         if self.stat == "Defense":
-            Character.defense += self.stat_bonus
-            print(f"Defense increased by {self.stat_bonus}. New defense: {Character.defense}")
+            character.defense += self.stat_bonus
+            print(f"Defense increased by {self.stat_bonus}. New defense: {character.defense}")
         elif self.stat == "Damage":
-            Character.attack += self.stat_bonus
-            print(f"Attack increased by {self.stat_bonus}. New attack: {Character.attack}")
+            character.attack += self.stat_bonus
+            print(f"Attack increased by {self.stat_bonus}. New attack: {character.attack}")
 
 class Potion:
     def __init__(self, name, potion_type, stat_bonus):
         self.name = name
-        self.type = potion_type
+        self.potion_type = potion_type
         self.stat_bonus = stat_bonus
 
-    def use(self):
+    def use(self, character):
         print(f"Using potion: {self.name}")
-        if self.type == "Health":
-            Character.health += self.stat_bonus
-            print(f"Health increased by {self.stat_bonus}. New health: {Character.health}")
-        elif self.type == "Mana":
-            Character.mana += self.stat_bonus
-            print(f"Mana increased by {self.stat_bonus}. New mana: {Character.mana}")
+        if self.potion_type == "Health":
+            character.health += self.stat_bonus
+            print(f"Health increased by {self.stat_bonus}. New health: {character.health}")
+        elif self.potion_type == "Mana":
+            character.mana += self.stat_bonus
+            print(f"Mana increased by {self.stat_bonus}. New mana: {character.mana}")
 
 class Shield(Equipment):
     def __init__(self, name, defense):

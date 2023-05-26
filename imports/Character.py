@@ -10,6 +10,7 @@ class Character:
         self.inventory = []
         self.experience = 0
         self.level = 1
+        self.max_health = health
 
     def display_character_info(self):
         print("Name:", self.name)
@@ -94,9 +95,14 @@ class Character:
     def is_alive(self):
         return self.health > 0
     
-    def gain_experience(self, xp):
-        self.experience += xp
-        print(f"You gained {xp} experience points.")
+    def gain_experience(self, experience_points):
+        self.experience += experience_points
+        print(f"{self.name} gained {experience_points} experience points.")
+
+        xp_needed = self.calculate_xp_needed(self.level + 1)
+        if self.experience >= xp_needed:
+            self.level_up()
+
 
     def reset(self):
         self.health = self.max_health

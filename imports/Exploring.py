@@ -27,7 +27,8 @@ class Exploring:
 
         if self.player.is_alive():
             print(f"You defeated {enemy.name}!")
-            self.player.add_item_to_inventory(Potion("Health Potion", "Health"))
+            potion = Potion("Health Potion", "Health", 20)  # Create a Health Potion item
+            self.player.add_item_to_inventory(potion)
             self.player.gain_experience(enemy.xp)  # Gain XP from defeated enemy
         else:
             print("You were defeated by the enemy.")
@@ -35,5 +36,5 @@ class Exploring:
 
     def find_treasure_chest(self):
         print("You found a treasure chest!")
-        item = random.choice([Potion("Health Potion", "Health"), Potion("Mana Potion", "Mana")])
-        self.player.add_item_to_inventory(item)
+        potion = random.choice([Potion("Health Potion", "Health", 20), Potion("Mana Potion", "Mana", 20)])
+        self.player.add_item_to_inventory(potion)

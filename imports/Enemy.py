@@ -1,12 +1,13 @@
 import random
 
 class Enemy:
-    def __init__(self, name, level, health, strength, xp):
+    def __init__(self, name, level, health, damage, xp):
         self.name = name
         self.level = level
         self.health = health
-        self.strength = strength
+        self.damage = damage
         self.xp = xp
+
 
     def display_enemy_info(self):
         print("Name:", self.name)
@@ -32,29 +33,35 @@ class Enemy:
 
 class Goblin(Enemy):
     def __init__(self):
-        super().__init__("Goblin", 1, 50, 10)
+        super().__init__("Goblin", 1, 50, 10, 10)
+        self.strength = 10
 
 
 class Skeleton(Enemy):
     def __init__(self):
-        super().__init__("Skeleton", 2, 75, 15)
+        super().__init__("Skeleton", 2, 75, 15, 15)
+        self.strength = 15
 
 
 class Orc(Enemy):
     def __init__(self):
-        super().__init__("Orc", 3, 100, 20)
+        super().__init__("Orc", 3, 100, 20, 20)
+        self.strength = 20
 
 
 class Dragon(Enemy):
     def __init__(self):
-        super().__init__("Dragon", 5, 200, 30)
+        super().__init__("Dragon", 5, 200, 30, 30)
+        self.strength = 25
 
 
 class SkeletonBoss(Enemy):
     def __init__(self):
-        super().__init__("Skeleton Boss", 8, 500, 40)
+        super().__init__("Skeleton Boss", 8, 500, 40, 50)
+        self.strength = 35
 
 
 class OrcBoss(Enemy):
     def __init__(self):
-        super().__init__("Orc Boss", 10, 1000, 50)
+        super().__init__("Orc Boss", 10, 1000, 50, 75)
+        self.strength = 55
