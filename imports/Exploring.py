@@ -68,9 +68,16 @@ class Exploring:
                 break
 
         if not self.player.is_alive():
-            self.player.reset()
+            self.player.rest()
 
     def find_treasure_chest(self):
         print("You found a treasure chest!")
-        item = random.choice([Potion("Health Potion", "Health", 10), Potion("Mana Potion", "Mana", 10)])
+        item = self.generate_random_potion()
         self.player.add_item_to_inventory(item)
+
+    def generate_random_potion(self):
+        potion_types = ["Health", "Mana", "Stamina"]
+        potion_type = random.choice(potion_types)
+        potion_name = f"{potion_type} Potion"
+        potion_stat_bonus = random.randint(5, 15)  # Adjust the stat bonus range as desired
+        return Potion(potion_name, potion_type, potion_stat_bonus)
