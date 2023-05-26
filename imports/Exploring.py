@@ -1,5 +1,5 @@
 import random
-from .Enemy import Enemy
+from .Enemy import Goblin, Skeleton, Orc, Dragon, SkeletonBoss, OrcBoss
 from .Items import Potion
 
 class Exploring:
@@ -18,7 +18,7 @@ class Exploring:
             print("You didn't find anything interesting.")
 
     def encounter_enemy(self):
-        enemy = Enemy("Goblin", 50, 8)
+        enemy = random.choice([Goblin(), Skeleton(), Orc(), Dragon(), SkeletonBoss(), OrcBoss()])
         print("You encountered an enemy:", enemy.name)
         while self.player.is_alive() and enemy.is_alive():
             self.player.attack(enemy)
@@ -28,8 +28,10 @@ class Exploring:
         if self.player.is_alive():
             print(f"You defeated {enemy.name}!")
             self.player.add_item_to_inventory(Potion("Health Potion", "Health"))
+            self.player.gain_experience(enemy.xp)  # Gain XP from defeated enemy
         else:
             print("You were defeated by the enemy.")
+            self.player.reset()  # Reset the player if defeated
 
     def find_treasure_chest(self):
         print("You found a treasure chest!")
